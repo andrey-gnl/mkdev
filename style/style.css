@@ -1,0 +1,39 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    font-size: 14px;
+}
+
+.row {
+    display: flex;
+}
+
+.column {
+    flex: 1;
+    margin: 0 10px;
+}
+
+
+.column__inner {
+    background: #eee;
+    padding: 10px;
+    border-radius: 3px;
+}
+
+.card {
+    padding: 10px;
+    background: #fff;
+    border-radius: 3px;
+}
+
+.card:not(:last-child) {
+    margin-bottom: 10px;
+}
+
+.card__title {
+    font-size: 18px;
+}
+
+.meta {
+    font-size: 12px;
+    color: #848484;
+}
