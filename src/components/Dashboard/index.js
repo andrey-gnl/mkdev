@@ -31,20 +31,17 @@ export default class Dashboard extends Component {
 
     }
 
-    componentDidMount() {
+    componentWillMount() {
         fetch('http://localhost:3000/api/tickets/')
             .then((response) => response.json())
             .then((data) => {
-                // console.log(data[0].id);
                 this.setState({data})
             })
     }
 
     render() {
-        const { data } = this.state;
         return (
             <div>{this.getBody()}</div>
-
         );
     }
 }
