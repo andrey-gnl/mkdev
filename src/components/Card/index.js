@@ -1,5 +1,5 @@
 import React from 'react';
-import { formateDate } from '../../utils';
+import { formatDate } from '../../utils';
 
 const Card = (props) => {
     const { data } = props;
@@ -11,9 +11,9 @@ const Card = (props) => {
             <div className="card__description">{data.description}</div>
 
             <div className="card__time meta">
-                Created: {formateDate(data.createdAt)}
+                Created: {formatDate(data.createdAt)}
                 <br />
-                Edited: {formateDate(data.updatedAt)}
+                Edited: {formatDate(data.updatedAt)}
             </div>
         </div>
     );
