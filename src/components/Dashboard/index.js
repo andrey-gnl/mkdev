@@ -12,24 +12,19 @@ export default class Dashboard extends Component {
         const {data} = this.state;
         if (!data.length) return 'Loading...';
 
-        const arr = {};
+        const cardsSotrtedByStatus = {};
         data.forEach((el) => {
-            if(!arr[el.status])  arr[el.status] = [];
-            arr[el.status].push(el) ;
+            if(!cardsSotrtedByStatus[el.status])  cardsSotrtedByStatus[el.status] = [];
+            cardsSotrtedByStatus[el.status].push(el) ;
         });
 
-        const columns = Object.keys(arr).map((key, i) => {
-            const cards = (arr[key].map((el, i) => <Card key={i} data={el} />));
+        const columns = Object.keys(cardsSotrtedByStatus).map((key, i) => {
+            const cards = (cardsSotrtedByStatus[key].map((el, i) => <Card key={i} data={el} />));
             return <Column key={i}>{cards}</Column>
         });
 
         return <div className="row">{columns}</div>
     };
-
-    constructor(props) {
-        super(props);
-
-    }
 
     componentWillMount() {
         fetch('http://localhost:3000/api/tickets/')
