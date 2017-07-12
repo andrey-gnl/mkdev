@@ -27,7 +27,7 @@ export default class Dashboard extends Component {
     };
 
     componentWillMount() {
-        fetch('http://localhost:3000/api/tickets/')
+        fetch('api/tickets/')
             .then((response) => response.json())
             .then((data) => {
                 this.setState({data})
