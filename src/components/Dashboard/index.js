@@ -1,25 +1,23 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
+import {connect} from 'react-redux';
+import {fetchTasks} from '../../actions';
 import Column from '../Column';
 import Card from '../Card';
 
-
-export default class Dashboard extends Component {
-    state = {
-        data: []
-    };
+class Dashboard extends Component {
 
     getBody = () => {
-        const {data} = this.state;
-        if (!data.length) return 'Loading...';
+        const {tasks} = this.state;
+        if (!tasks.length) return 'Loading...';
 
         const cardsSotrtedByStatus = {};
-        data.forEach((el) => {
-            if(!cardsSotrtedByStatus[el.status])  cardsSotrtedByStatus[el.status] = [];
-            cardsSotrtedByStatus[el.status].push(el) ;
+        tasks.forEach((el) => {
+            if (!cardsSotrtedByStatus[el.status]) cardsSotrtedByStatus[el.status] = [];
+            cardsSotrtedByStatus[el.status].push(el);
         });
 
         const columns = Object.keys(cardsSotrtedByStatus).map((key, i) => {
-            const cards = (cardsSotrtedByStatus[key].map((el, i) => <Card key={i} data={el} />));
+            const cards = (cardsSotrtedByStatus[key].map((el, i) => <Card key={i} data={el}/>));
             return <Column key={i}>{cards}</Column>
         });
 
@@ -27,11 +25,7 @@ export default class Dashboard extends Component {
     };
 
     componentWillMount() {
-        fetch('api/tickets/')
-            .then((response) => response.json())
-            .then((data) => {
-                this.setState({data})
-            })
+        this.props.fetchTasks();
     }
 
     render() {
@@ -40,3 +34,10 @@ export default class Dashboard extends Component {
         );
     }
 }
+export default connect((state) => {
+    return {
+        tickets: state.tickets,
+        error: state.error,
+        pending: state.pending
+    }
+}, {fetchTasks})(Dashboard);
