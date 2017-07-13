@@ -1,8 +1,14 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {fetchTasks} from '../../actions';
+import * as actions from '../../actions';
 import Column from '../Column';
 import Card from '../Card';
+
+@connect(state => ({
+    tasks: state.tasks,
+    error: state.error,
+    pending: state.pending
+}), actions)
 
 class Dashboard extends Component {
 
@@ -34,10 +40,4 @@ class Dashboard extends Component {
         );
     }
 }
-export default connect((state) => {
-    return {
-        tickets: state.tickets,
-        error: state.error,
-        pending: state.pending
-    }
-}, {fetchTasks})(Dashboard);
+export default Dashboard;
