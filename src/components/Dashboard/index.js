@@ -5,9 +5,9 @@ import Column from '../Column';
 import Card from '../Card';
 
 @connect(state => ({
-    tasks: state.tasks,
-    error: state.error,
-    pending: state.pending
+    tasks: state.dashboardReducers.tasks,
+    error: state.dashboardReducers.error,
+    pending: state.dashboardReducers.pending
 }), actions)
 
 class Dashboard extends Component {
