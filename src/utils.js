@@ -6,3 +6,10 @@ export const formatDate = (dateISO) => {
     const time = date.utc().format('HH:mm:ss')
     return `${dateMain} ${time}`
 }
+
+export function handleErrors(response) {
+    if (!response.ok) {
+        throw Error(response.statusText);
+    }
+    return response;
+}

@@ -13,8 +13,9 @@ import Card from '../Card'
 class Dashboard extends Component {
 
     getBody = () => {
-        const {tasks} = this.props
-        if (!tasks.length) return 'Loading...'
+        const {tasks, pending, error} = this.props
+        if (pending) return 'Loading...'
+        if (error) return <span>{error.message}</span>
 
         const cardsSotrtedByStatus = {}
         tasks.forEach((el) => {
