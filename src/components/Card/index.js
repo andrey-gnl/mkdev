@@ -1,8 +1,8 @@
-import React from 'react';
-import { formatDate } from '../../utils';
+import React from 'react'
+import {formatDate} from '../../utils'
 
 const Card = (props) => {
-    const { data } = props;
+    const {data} = props
 
     return (
         <div className="card">
@@ -16,6 +16,6 @@ const Card = (props) => {
                 Edited: {formatDate(data.updatedAt)}
             </div>
         </div>
-    );
-};
-export default Card;
+    )
+}
+export default Card

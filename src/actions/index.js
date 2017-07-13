@@ -8,7 +8,7 @@ export function fetchTasks() {
     return (dispatch) => {
         dispatch({
             type: FETCH_TICKETS_START
-        });
+        })
 
         fetch('api/tickets/')
             .then((response) => response.json())

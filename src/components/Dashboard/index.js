@@ -1,8 +1,8 @@
-import React, {Component} from 'react';
-import {connect} from 'react-redux';
-import * as actions from '../../actions';
-import Column from '../Column';
-import Card from '../Card';
+import React, {Component} from 'react'
+import {connect} from 'react-redux'
+import * as actions from '../../actions'
+import Column from '../Column'
+import Card from '../Card'
 
 @connect(state => ({
     tasks: state.dashboardReducers.tasks,
@@ -13,31 +13,31 @@ import Card from '../Card';
 class Dashboard extends Component {
 
     getBody = () => {
-        const {tasks} = this.props;
-        if (!tasks.length) return 'Loading...';
+        const {tasks} = this.props
+        if (!tasks.length) return 'Loading...'
 
-        const cardsSotrtedByStatus = {};
+        const cardsSotrtedByStatus = {}
         tasks.forEach((el) => {
-            if (!cardsSotrtedByStatus[el.status]) cardsSotrtedByStatus[el.status] = [];
-            cardsSotrtedByStatus[el.status].push(el);
-        });
+            if (!cardsSotrtedByStatus[el.status]) cardsSotrtedByStatus[el.status] = []
+            cardsSotrtedByStatus[el.status].push(el)
+        })
 
         const columns = Object.keys(cardsSotrtedByStatus).map((key, i) => {
-            const cards = (cardsSotrtedByStatus[key].map((el, i) => <Card key={i} data={el}/>));
+            const cards = (cardsSotrtedByStatus[key].map((el, i) => <Card key={i} data={el}/>))
             return <Column key={i}>{cards}</Column>
-        });
+        })
 
         return <div className="row">{columns}</div>
-    };
+    }
 
     componentWillMount() {
-        this.props.fetchTasks();
+        this.props.fetchTasks()
     }
 
     render() {
         return (
             <div>{this.getBody()}</div>
-        );
+        )
     }
 }
-export default Dashboard;
+export default Dashboard

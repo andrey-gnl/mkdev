@@ -8,19 +8,19 @@ const initialState = {
     tasks: [],
     pending: false,
     error: ''
-};
+}
 
 export default (state = initialState, action) => {
-    const { type, tasks, error } = action;
+    const {type, tasks, error} = action
 
     switch (type) {
         case FETCH_TICKETS_START:
-            return Object.assign({}, state, { pending: true })
+            return Object.assign({}, state, {pending: true})
         case FETCH_TICKETS_END_SUCCESS:
-            return Object.assign({}, state, { tasks, pending: false })
+            return Object.assign({}, state, {tasks, pending: false})
         case FETCH_TICKETS_END_FAIL:
-            return Object.assign({}, state, { tasks: [], pending: false, error })
+            return Object.assign({}, state, {tasks: [], pending: false, error})
     }
 
-    return state;
+    return state
 };
