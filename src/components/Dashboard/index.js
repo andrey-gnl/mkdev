@@ -3,7 +3,7 @@ import {connect} from 'react-redux'
 import * as actions from '../../actions'
 import Column from '../Column'
 import Card from '../Card'
-
+import Loader from '../Loader'
 @connect(state => ({
     tasks: state.dashboardReducers.tasks,
     error: state.dashboardReducers.error,
@@ -14,7 +14,7 @@ class Dashboard extends Component {
 
     getBody = () => {
         const {tasks, pending, error} = this.props
-        if (pending) return 'Loading...'
+        if (pending) return <Loader />
         if (error) return <span>{error.message}</span>
 
         const cardsSotrtedByStatus = {}

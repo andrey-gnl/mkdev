@@ -17,7 +17,7 @@ export default (state = initialState, action) => {
         case FETCH_TICKETS_START:
             return Object.assign({}, state, {pending: true})
         case FETCH_TICKETS_END_SUCCESS:
-            return Object.assign({}, state, {tasks, pending: false})
+            return Object.assign({}, state, {tasks, pending: false, error: ''})
         case FETCH_TICKETS_END_FAIL:
             return Object.assign({}, state, {tasks: [], pending: false, error})
     }

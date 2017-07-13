@@ -11,18 +11,20 @@ export function fetchTasks() {
         dispatch({
             type: FETCH_TICKETS_START
         })
+        setTimeout(() => {
+            fetch('api/tickets/')
+                .then(handleErrors)
+                .then((response) => response.json())
+                .then((tasks) => dispatch({
+                        type: FETCH_TICKETS_END_SUCCESS,
+                        tasks
+                    })
+                )
+                .catch((error) => dispatch({
+                    type: FETCH_TICKETS_END_FAIL,
+                    error
+                }))
+        },1000)
 
-        fetch('api/tickets/')
-            .then(handleErrors)
-            .then((response) => response.json())
-            .then((tasks) => dispatch({
-                    type: FETCH_TICKETS_END_SUCCESS,
-                    tasks
-                })
-            )
-            .catch((error) => dispatch({
-                type: FETCH_TICKETS_END_FAIL,
-                error
-            }))
     }
 }
