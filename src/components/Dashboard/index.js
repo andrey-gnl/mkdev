@@ -13,7 +13,7 @@ import Card from '../Card';
 class Dashboard extends Component {
 
     getBody = () => {
-        const {tasks} = this.state;
+        const {tasks} = this.props;
         if (!tasks.length) return 'Loading...';
 
         const cardsSotrtedByStatus = {};

@@ -5,10 +5,11 @@ body {
 
 .row {
     display: flex;
+    flex-wrap: nowrap;
 }
 
 .column {
-    flex: 1;
+    flex: 1 0 250px;
     margin: 0 10px;
 }
 
