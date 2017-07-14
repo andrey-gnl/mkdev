@@ -1,12 +1,19 @@
+const  ExtractTextPlugin = require('extract-text-webpack-plugin');
+const extractSass = new ExtractTextPlugin({
+    filename: "[name].[contenthash].css",
+    disable: process.env.NODE_ENV === "development"
+});
 module.exports = {
     entry: [
-        './src/index.js'
+        './src/index.js',
+
     ],
     output: {
         path: __dirname,
         publicPath: '/',
         filename: 'bundle.js'
     },
+    devtool: "source-map",
     module: {
         rules: [
             {
@@ -22,9 +29,25 @@ module.exports = {
                         plugins: ['transform-decorators-legacy']
                     }
                 }
+            },  {
+                test: /\.sass$/,
+                use: [{
+                    loader: "style-loader" // creates style nodes from JS strings
+                }, {
+                    loader: "css-loader", options: {
+                        sourceMap: true
+                    } // translates CSS into CommonJS
+                }, {
+                    loader: "sass-loader", options: {
+                        sourceMap: true
+                    } // compiles Sass to CSS
+                }]
             }]
 
     },
+    plugins: [
+        extractSass
+    ],
     resolve: {
         extensions: ['.js', '.jsx']
     },
