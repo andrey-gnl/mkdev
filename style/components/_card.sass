@@ -1,8 +1,32 @@
 .card
+    position: relative
     padding: 10px
     background: #fff
     border-radius: 3px
+    transition: opacity .3s, transform .3s
+    &.disabled
+        cursor: progress
+        opacity: .8
+        transform: scale(0.97)
     &:not(:last-child)
         margin-bottom: 10px
     &__title
         font-size: 18px
+    &__button
+        position: absolute
+        top: 0px
+        right: 0px
+        width: 30px
+        height: 30px
+        background: none
+        opacity: .7
+        transform: scale(0.8)
+        transition: opacity .3s, transform .3s, color .3s
+        &:disabled
+            cursor: not-allowed
+        &:hover, &:disabled
+            opacity: 1
+            transform: scale(1) rotate(-90deg)
+            color: #d32322
+        .fa
+            font-size: 22px

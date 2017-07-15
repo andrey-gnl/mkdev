@@ -4,6 +4,7 @@ import * as actions from '../../actions'
 import Column from '../Column'
 import Card from '../Card'
 import Loader from '../Loader'
+
 @connect(state => ({
     tasks: state.dashboardReducers.tasks,
     error: state.dashboardReducers.error,
@@ -24,11 +25,15 @@ class Dashboard extends Component {
         })
 
         const columns = Object.keys(cardsSotrtedByStatus).map((key, i) => {
-            const cards = (cardsSotrtedByStatus[key].map((el, i) => <Card key={i} data={el}/>))
+            const cards = (cardsSotrtedByStatus[key].map((el, i) => <Card key={i} data={el} handleClick={this.handleClick}/>))
             return <Column key={i}>{cards}</Column>
         })
 
         return <div className="row">{columns}</div>
+    }
+
+    handleClick = (id) => {
+        this.props.removeTask(id)
     }
 
     componentWillMount() {
