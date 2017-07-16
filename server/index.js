@@ -12,7 +12,7 @@ app.get('/api/tickets', (req, res) => {
 app.delete('/api/tickets/:id', (req, res) => {
     const id = Number(req.params.id);
     tickets = tickets.filter((el) => el.id !== id);
-    setTimeout(() => res.send({ status: 'okkkk'}), 500);
+    setTimeout(() => res.send({ status: 'ok'}), 500);
 });
 
 app.listen(port, () => {
