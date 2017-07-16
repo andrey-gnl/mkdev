@@ -8,41 +8,44 @@ import Loader from '../Loader'
 @connect(state => ({
     tasks: state.dashboardReducers.tasks,
     error: state.dashboardReducers.error,
-    pending: state.dashboardReducers.pending
+    pending: state.dashboardReducers.pending,
+    columns: state.columns
 }), actions)
 
 class Dashboard extends Component {
 
-    getBody = () => {
-        const {tasks, pending, error} = this.props
-        if (pending) return <Loader />
-        if (error) return <span>{error.message}</span>
+    getColumns = () => {
+        const {tasks, columns} = this.props
 
-        const cardsSotrtedByStatus = {}
-        tasks.forEach((el) => {
-            if (!cardsSotrtedByStatus[el.status]) cardsSotrtedByStatus[el.status] = []
-            cardsSotrtedByStatus[el.status].push(el)
-        })
-
-        const columns = Object.keys(cardsSotrtedByStatus).map((key, i) => {
-            const cards = (cardsSotrtedByStatus[key].map((el, i) => <Card key={i} data={el} handleClick={this.handleClick}/>))
-            return <Column key={i}>{cards}</Column>
-        })
-
-        return <div className="row">{columns}</div>
+        return(
+            <div className="row">
+                {columns.map((col, i) => (
+                    <Column key={i} title={col.name}>
+                        {tasks.filter((task) => task.status === col.status).map((el, i) =>
+                            (<Card key={i} data={el} handleClick={this.handleClick} />)
+                        )}
+                    </Column>
+                ))}
+            </div>)
     }
 
     handleClick = (id) => {
         this.props.removeTask(id)
     }
 
-    componentWillMount() {
+    componentDidMount() {
         this.props.fetchTasks()
     }
 
     render() {
+        const {tasks, pending, error} = this.props
+
         return (
-            <div>{this.getBody()}</div>
+            <div>
+                {pending && <Loader />}
+                {!!tasks.length && this.getColumns()}
+                {error && <span>{error.message}</span>}
+            </div>
         )
     }
 }
