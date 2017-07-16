@@ -1,22 +1,19 @@
 const express = require('express');
 const app = express();
 
-const tickets = require('./data/tickets.mock.json');
+let tickets = require('./data/tickets.mock.json');
 
 const port = 3000;
 
 app.get('/api/tickets', (req, res) => {
-    res.send(tickets);
+    setTimeout(() => res.send(tickets), 750)
 });
 
-/*
 app.delete('/api/tickets/:id', (req, res) => {
-    let ticketsParse = JSON.parse(tickets);
-    ticketsParse = ticketsParse.filter((el) => el.id !== req.params.id );
-
-    res.send({ status: 'ok'})
+    const id = Number(req.params.id);
+    tickets = tickets.filter((el) => el.id !== id);
+    setTimeout(() => res.send({ status: 'okkkk'}), 500);
 });
-*/
 
 app.listen(port, () => {
     console.log(`Server listening on port ${port}`)
