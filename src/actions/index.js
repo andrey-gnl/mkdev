@@ -41,8 +41,8 @@ export function removeTask(id) {
 
         fetch(`api/tickets/${id}`, {method: 'DELETE'})
             .then((response) => response.json())
-            .then((status) => {
-                    if (status === 'ok') {
+            .then((response) => {
+                    if (response.status === 'ok') {
                         return dispatch({
                             type: REMOVE_TASK_END_SUCCESS,
                             id
