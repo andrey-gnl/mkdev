@@ -6,6 +6,7 @@
   "repository": "git@github.com:andrey-gnl/mkdev.git",
   "scripts": {
     "start": "concurrently \"node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js\" \"node ./server/\" ",
+    "build": "webpack --env=prod",
     "test": "mocha --compilers js:babel-core/register --require ./test/test_helper.js --recursive ./test",
     "test:watch": "npm run test -- --watch"
   },
@@ -24,6 +25,7 @@
     "express": "^4.15.3",
     "extract-text-webpack-plugin": "^3.0.0",
     "file-loader": "^0.11.2",
+    "html-webpack-plugin": "^2.29.0",
     "jquery": "^3.2.1",
     "jsdom": "^11.1.0",
     "mocha": "^3.4.2",
