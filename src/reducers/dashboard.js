@@ -27,11 +27,45 @@ export default (state = initialState, action) => {
 
         case REMOVE_TASK_START:
             const stateWithPendingTask = _.cloneDeep(state)
-            stateWithPendingTask.tasks.forEach((el) => {
-                if(el.id === id) {
-                    el.pending = true
-                }
-            })
+            let after = performance.now();
+            for (let i = 0; i <= 10000; i++) {
+                let x = Object.assign({}, state,  {
+                    tasks: state.tasks.map(t => t.id !== id ? t : Object.assign({}, t, { pending: true }))
+                })
+
+            }
+
+            let before = performance.now();
+            console.info(`For 10 000 it takes: ${(before - after) / 1000} s`);
+
+             after = performance.now();
+            for (let i = 0; i <= 1000; i++) {
+                let x = Object.assign({}, state,  {
+                    tasks: state.tasks.map(t => t.id !== id ? t : Object.assign({}, t, { pending: true }))
+                })
+
+            }
+
+             before = performance.now();
+
+            console.info(`For 1000 it takes: ${(before - after) / 1000} s`);
+            after = performance.now();
+            for (let i = 0; i <= 100; i++) {
+                let x = Object.assign({}, state,  {
+                    tasks: state.tasks.map(t => t.id !== id ? t : Object.assign({}, t, { pending: true }))
+                })
+
+            }
+
+            before = performance.now();
+
+            console.info(`For 100 it takes: ${(before - after) / 1000} s`);
+            // stateWithPendingTask.tasks.forEach((el) => {
+            //     if(el.id === id) {
+            //         el.pending = true
+            //     }
+            // })
+
             return Object.assign({}, state,  stateWithPendingTask)
         case REMOVE_TASK_END_SUCCESS:
             const stateWithoutTask = Object.assign({}, state);
