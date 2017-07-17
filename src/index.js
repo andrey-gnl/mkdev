@@ -9,12 +9,12 @@ import App from './components/app'
 import '../style/app.sass'
 
 const store = createStore(
-    rootReducer,
-    applyMiddleware(thunk, logger)
+  rootReducer,
+  applyMiddleware(thunk, logger)
 )
 
 ReactDOM.render(
-    <Provider store={store}>
-        <App />
-    </Provider>
-    , document.querySelector('.container'))
+  <Provider store={store}>
+    <App />
+  </Provider>
+  , document.querySelector('.container'))
