@@ -8,7 +8,8 @@
     "start": "concurrently \"node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js\" \"node ./server/\" ",
     "build": "webpack",
     "test": "mocha --compilers js:babel-core/register --require ./test/test_helper.js --recursive ./test",
-    "test:watch": "npm run test -- --watch"
+    "test:watch": "npm run test -- --watch",
+    "postinstall": "webpack"
   },
   "author": "",
   "license": "ISC",
