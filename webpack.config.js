@@ -31,6 +31,13 @@ module.exports = {
           }
         }
       }, {
+        test: /\.js$/,
+        include: [
+          path.resolve(__dirname, + '/src')
+        ],
+        loader: 'eslint',
+        exclude: /node_modules/
+      }, {
         test: /\.sass$/,
         use: [{
           loader: "style-loader" // creates style nodes from JS strings
