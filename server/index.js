@@ -4,7 +4,7 @@ const path = require('path')
 
 let tickets = require('./data/tickets.mock.json')
 
-const port = 3003
+const port = process.env.PORT || 3003
 app.set('port', port)
 
 app.get('/api/tickets', (req, res) => {
