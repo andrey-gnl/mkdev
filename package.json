@@ -6,7 +6,7 @@
   "repository": "git@github.com:andrey-gnl/mkdev.git",
   "scripts": {
     "start": "concurrently \"node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js\" \"node ./server/\" ",
-    "build": "webpack --env=prod",
+    "build": "webpack",
     "test": "mocha --compilers js:babel-core/register --require ./test/test_helper.js --recursive ./test",
     "test:watch": "npm run test -- --watch"
   },
@@ -20,6 +20,7 @@
     "babel-preset-react": "^6.24.1",
     "chai": "^4.1.0",
     "chai-jquery": "^2.0.0",
+    "clean-webpack-plugin": "^0.1.16",
     "concurrently": "^3.5.0",
     "css-loader": "^0.28.4",
     "eslint": "^4.2.0",
