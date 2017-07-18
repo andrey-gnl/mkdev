@@ -5,7 +5,7 @@ const path = require('path')
 let tickets = require('./data/tickets.mock.json')
 
 const port = process.env.PORT || 3003
-app.set('port', port)
+app.listen(port)
 
 app.get('/api/tickets', (req, res) => {
   setTimeout(() => res.send(tickets), 750)
