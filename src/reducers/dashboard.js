@@ -18,6 +18,7 @@ export default (state = initialState, action) => {
   const {type, tasks, error, id} = action
 
   switch (type) {
+    // all tasks
     case FETCH_TICKETS_START:
       return Object.assign({}, state, {pending: true})
     case FETCH_TICKETS_END_SUCCESS:
@@ -25,23 +26,23 @@ export default (state = initialState, action) => {
     case FETCH_TICKETS_END_FAIL:
       return Object.assign({}, state, {tasks: [], pending: false, error})
 
+    // single task
     case REMOVE_TASK_START:
-      return Object.assign({}, state, {
-        tasks: state.tasks.map(t => t.id !== id ? t : Object.assign({}, t, {pending: true}))
-      })
+      return {
+        ...state,
+        tasks: state.tasks.map(t => t.id !== id ? t : {...t, pending: true})
+      }
     case REMOVE_TASK_END_SUCCESS:
-      const stateWithoutTask = Object.assign({}, state)
-      stateWithoutTask.tasks = state.tasks.filter((el) => el.id !== id)
-      return Object.assign({}, state, stateWithoutTask)
+      return {
+        ...state,
+        tasks: state.tasks.filter(t => t.id !== id)
+      }
     case REMOVE_TASK_END_FAIL:
-      const stateWithoutPendingTask = _.cloneDeep(state)
-      stateWithoutPendingTask.tasks.forEach((el) => {
-        if (el.id === id) {
-          el.pending = false
-        }
-      })
       console.error(`CAN'T DELETE CARD :(`)
-      return Object.assign({}, state, stateWithoutPendingTask)
+      return {
+        ...state,
+        tasks: state.tasks.map(t => t.id !== id ? t : {...t, pending: false})
+      }
   }
 
   return state
