@@ -20,11 +20,11 @@ export default (state = initialState, action) => {
   switch (type) {
     // all tasks
     case FETCH_TICKETS_START:
-      return Object.assign({}, state, {pending: true})
+      return {...state, pending: true}
     case FETCH_TICKETS_END_SUCCESS:
-      return Object.assign({}, state, {tasks, pending: false, error: ''})
+      return {...state, tasks, pending: false, error: ''}
     case FETCH_TICKETS_END_FAIL:
-      return Object.assign({}, state, {tasks: [], pending: false, error})
+      return {...state, tasks: [], pending: false, error}
 
     // single task
     case REMOVE_TASK_START:
