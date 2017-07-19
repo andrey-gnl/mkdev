@@ -17,11 +17,8 @@ class Dashboard extends Component {
 
   getColumns = () => {
     const {tasks, columns} = this.props
-    const allCols = columns.map((col) => col.status)
-    const filledCols = tasks.map((task) => task.status)
-    const emptyCols = _.xor(allCols, filledCols)
 
-    const isEmptyCol = (col) => emptyCols.indexOf(col) > -1
+    const isEmptyCol = (status) => !tasks.find((task) => task.status === status)
 
     return (
       <div className="row">

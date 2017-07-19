@@ -4,6 +4,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 let env = process.env.NODE_ENV || 'development';
+let port = process.env.PORT || 3009;
 if (env !== 'production') {
   env = 'development';
 }
@@ -93,7 +94,7 @@ module.exports = {
     port: 5005,
     proxy: {
       '/api': {
-        target: 'http://localhost:3003',
+        target: `http://localhost:${port}`,
         secure: false
       }
     }
