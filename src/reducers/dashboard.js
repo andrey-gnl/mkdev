@@ -4,7 +4,8 @@ import {
   FETCH_TICKETS_END_FAIL,
   REMOVE_TASK_START,
   REMOVE_TASK_END_SUCCESS,
-  REMOVE_TASK_END_FAIL
+  REMOVE_TASK_END_FAIL,
+  CHANGE_TASK_STATUS
 } from '../constants'
 import _ from 'lodash'
 
@@ -15,7 +16,7 @@ const initialState = {
 }
 
 export default (state = initialState, action) => {
-  const {type, tasks, error, id} = action
+  const {type, tasks, error, id, status} = action
 
   switch (type) {
     // all tasks
@@ -42,6 +43,11 @@ export default (state = initialState, action) => {
       return {
         ...state,
         tasks: state.tasks.map(t => t.id !== id ? t : {...t, pending: false})
+      }
+    case CHANGE_TASK_STATUS:
+      return {
+        ...state,
+        tasks: state.tasks.map(t => t.id !== id ? t : {...t, status})
       }
   }
 
