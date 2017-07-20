@@ -5,7 +5,9 @@ import {
   REMOVE_TASK_START,
   REMOVE_TASK_END_SUCCESS,
   REMOVE_TASK_END_FAIL,
-  CHANGE_TASK_STATUS
+  CHANGE_TASK_STATUS_START,
+  CHANGE_TASK_STATUS_END_SUCCESS,
+  CHANGE_TASK_STATUS_END_FAIL
 } from '../constants'
 import _ from 'lodash'
 
@@ -31,7 +33,7 @@ export default (state = initialState, action) => {
     case REMOVE_TASK_START:
       return {
         ...state,
-        tasks: state.tasks.map(t => t.id !== id ? t : {...t, pending: true})
+        tasks: state.tasks.map(t => t.id !== id ? t : {...t, pendingRemove: true})
       }
     case REMOVE_TASK_END_SUCCESS:
       return {
@@ -42,12 +44,23 @@ export default (state = initialState, action) => {
       console.error(`CAN'T DELETE CARD :(`)
       return {
         ...state,
-        tasks: state.tasks.map(t => t.id !== id ? t : {...t, pending: false})
+        tasks: state.tasks.map(t => t.id !== id ? t : {...t, pendingRemove: false})
       }
-    case CHANGE_TASK_STATUS:
+    case CHANGE_TASK_STATUS_START:
       return {
         ...state,
-        tasks: state.tasks.map(t => t.id !== id ? t : {...t, status})
+        tasks: state.tasks.map(t => t.id !== id ? t : {...t, status, oldStatus: t.status, pendingStatus: true})
+      }
+    case CHANGE_TASK_STATUS_END_SUCCESS:
+      return {
+        ...state,
+        tasks: state.tasks.map(t => t.id !== id ? t : {...t, status, pendingStatus: false})
+      }
+    case CHANGE_TASK_STATUS_END_FAIL:
+      console.error(`CAN'T CHANGE STATUS :(`);
+      return {
+        ...state,
+        tasks: state.tasks.map(t => t.id !== id ? t : {...t, status: t.oldStatus,pendingStatus: false})
       }
   }
 

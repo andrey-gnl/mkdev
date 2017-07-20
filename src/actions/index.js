@@ -5,7 +5,9 @@ import {
   REMOVE_TASK_START,
   REMOVE_TASK_END_SUCCESS,
   REMOVE_TASK_END_FAIL,
-  CHANGE_TASK_STATUS
+  CHANGE_TASK_STATUS_START,
+  CHANGE_TASK_STATUS_END_SUCCESS,
+  CHANGE_TASK_STATUS_END_FAIL
 } from '../constants'
 import {handleErrors} from '../utils'
 
@@ -59,8 +61,33 @@ export function removeTask(id) {
 }
 
 export function changeStatus(id, status) {
-  return {
-    type: CHANGE_TASK_STATUS,
-    id, status
+  return (dispatch) => {
+    dispatch({
+      type: CHANGE_TASK_STATUS_START,
+      id, status
+    })
+
+    fetch(`api/tickets/${id}`,
+      {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({status})
+      })
+      .then((response) => response.json())
+      .then((response) => {
+        if(response.status === 'ok') {
+          return dispatch({
+            type: CHANGE_TASK_STATUS_END_SUCCESS,
+            id, status
+          })
+        }
+
+        return dispatch({
+          type: CHANGE_TASK_STATUS_END_FAIL,
+          id, status
+        })
+      })
   }
 }

@@ -1,4 +1,6 @@
 .card
+    $this: &
+
     position: relative
     padding: 10px
     background: #fff
@@ -9,6 +11,15 @@
         cursor: progress
         opacity: .8
         transform: scale(0.97)
+        #{$this}
+            &__btn
+                opacity: 1
+                transform: scale(1) rotate(-90deg)
+                color: #d32322
+
+    &.waiting
+        cursor: progress
+        opacity: .5
     &:not(:last-child)
         margin-bottom: 10px
     &__title
@@ -25,7 +36,7 @@
         transition: opacity .3s, transform .3s, color .3s
         &:disabled
             cursor: not-allowed
-        &:hover, &:disabled
+        &:hover:not(:disabled)
             opacity: 1
             transform: scale(1) rotate(-90deg)
             color: #d32322

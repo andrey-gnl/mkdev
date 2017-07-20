@@ -7,8 +7,11 @@ import * as actions from '../../actions'
 const columnTarget = {
   drop(props, monitor) {
     const item = monitor.getItem();
-    props.changeStatus(item.id, props.status)
-    console.dir(props);
+    // props.changeStatus(item.id, props.status)
+    console.log(item.status,props.status);
+    if(Number(item.status) !== Number(props.status)) {
+      props.changeStatus(item.id, props.status)
+    }
   }
 }
 

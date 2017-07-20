@@ -5,7 +5,13 @@ import {TYPES} from '../../constants'
 
 const cardSource = {
   beginDrag(props) {
-    return {id: props.data.id}
+    const {id, status} = props.data
+    return {id, status}
+  },
+  canDrag(props) {
+    const {pendingStatus, pendingRemove} = props.data
+
+    return !(pendingStatus || pendingRemove)
   }
 }
 function collect(connect, monitor) {
@@ -21,18 +27,18 @@ export default class Card extends Component {
   render() {
     const {data, handleClick, isDragging, connectDragSource } = this.props
     let cardClass = 'card'
-    const taskIsPending = data.pending
-    taskIsPending && (cardClass += ' disabled')
-
+    const taskIsPendingRemove = data.pendingRemove
+    const taskIsPendingStatus = data.pendingStatus
+    taskIsPendingRemove && (cardClass += ' disabled')
+    taskIsPendingStatus && (cardClass += ' waiting')
+    console.log('data.pendingStatus', data.pendingStatus);
     return connectDragSource(
-      <div className={cardClass} style={{
-        opacity: isDragging ? 0.5 : 1
-      }}>
+      <div className={`${cardClass} ${isDragging ? 'waiting' : ''}`}>
         <button
           type="button"
           className="card__button"
           onClick={() => handleClick(data.id)}
-          disabled={taskIsPending}
+          disabled={taskIsPendingRemove || taskIsPendingStatus || isDragging}
         >
           <i className="fa fa-times" />
         </button>

@@ -18,8 +18,8 @@ import Loader from '../Loader'
 class Dashboard extends Component {
 
   getColumns = () => {
-    const {tasks, columns, changeStatus} = this.props
-    console.log('changeStatus', changeStatus);
+    const {tasks, columns} = this.props
+
     const isEmptyCol = (status) => !tasks.find((task) => task.status === status)
 
     return (
