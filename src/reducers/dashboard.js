@@ -9,7 +9,6 @@ import {
   CHANGE_TASK_STATUS_END_SUCCESS,
   CHANGE_TASK_STATUS_END_FAIL
 } from '../constants'
-import _ from 'lodash'
 
 const initialState = {
   tasks: [],

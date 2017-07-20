@@ -29,9 +29,9 @@ app.put('/api/tickets/:id', (req, res) => {
     const task = tickets.find(el => el.id === id)
     task.status = status
 
-    setTimeout(() => res.send({status: 'ok'}), 5000)
+    setTimeout(() => res.send({status: 'ok'}), 750)
   } else {
-    setTimeout(() => res.send({status: 'error'}), 5000)
+    setTimeout(() => res.send({status: 'error'}), 750)
   }
 
 })
