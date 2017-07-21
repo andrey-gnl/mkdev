@@ -78,7 +78,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         pendingStatuses: false,
-        statuses: statuses.filter(s => s.active).sort((curr, next) => curr.id - next.id)
+        statuses: statuses.filter(s => s.active).sort((curr, next) => curr.order - next.order)
       }
     case FETCH_STATUSES_END_FAIL:
       console.error(`CAN'T FETCH STATUSES :(`);
