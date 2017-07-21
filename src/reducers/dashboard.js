@@ -7,26 +7,31 @@ import {
   REMOVE_TASK_END_FAIL,
   CHANGE_TASK_STATUS_START,
   CHANGE_TASK_STATUS_END_SUCCESS,
-  CHANGE_TASK_STATUS_END_FAIL
+  CHANGE_TASK_STATUS_END_FAIL,
+  FETCH_STATUSES_START,
+  FETCH_STATUSES_END_SUCCESS,
+  FETCH_STATUSES_END_FAIL
 } from '../constants'
 
 const initialState = {
   tasks: [],
-  pending: false,
+  statuses: [],
+  pendingTasks: false,
+  pendingStatuses: false,
   error: ''
 }
 
 export default (state = initialState, action) => {
-  const {type, tasks, error, id, status} = action
+  const {type, tasks, error, id, statuses, status} = action
 
   switch (type) {
     // all tasks
     case FETCH_TICKETS_START:
-      return {...state, pending: true}
+      return {...state, pendingTasks: true}
     case FETCH_TICKETS_END_SUCCESS:
-      return {...state, tasks, pending: false, error: ''}
+      return {...state, tasks, pendingTasks: false, error: ''}
     case FETCH_TICKETS_END_FAIL:
-      return {...state, tasks: [], pending: false, error}
+      return {...state, tasks: [], pendingTasks: false, error}
 
     // single task
     case REMOVE_TASK_START:
@@ -60,6 +65,27 @@ export default (state = initialState, action) => {
       return {
         ...state,
         tasks: state.tasks.map(t => t.id !== id ? t : {...t, status: t.oldStatus,pendingStatus: false})
+      }
+
+    // all statuses
+    case FETCH_STATUSES_START:
+
+      return {
+        ...state,
+        pendingStatuses: true
+      }
+    case FETCH_STATUSES_END_SUCCESS:
+      return {
+        ...state,
+        pendingStatuses: false,
+        statuses: statuses.filter(s => s.active).sort((curr, next) => curr.id - next.id)
+      }
+    case FETCH_STATUSES_END_FAIL:
+      console.error(`CAN'T FETCH STATUSES :(`);
+      return {
+        ...state,
+        pendingStatuses: false,
+        statuses: []
       }
   }
 

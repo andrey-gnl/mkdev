@@ -1,18 +1,26 @@
 [
   {
-    "id": 1,
-    "name": "Todo"
-  },
-  {
-    "id": 2,
-    "name": "Progress"
-  },
-  {
     "id": 3,
-    "name": "Done"
+    "name": "Done",
+    "order": 3,
+    "active": true
+  },
+  {
+    "id": 1,
+    "name": "Todo",
+    "order": 1,
+    "active": true
   },
   {
     "id": 4,
-    "name": "Archive"
+    "name": "Archive",
+    "order": 0,
+    "active": false
+  },
+  {
+    "id": 2,
+    "name": "Progress",
+    "order": 2,
+    "active": true
   }
 ]

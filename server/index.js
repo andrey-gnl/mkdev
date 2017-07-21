@@ -14,6 +14,10 @@ app.get('/api/tickets', (req, res) => {
   setTimeout(() => res.send(tickets), 750)
 })
 
+app.get('/api/statuses', (req, res) => {
+  setTimeout(() => res.send(statuses), 750)
+})
+
 app.delete('/api/tickets/:id', (req, res) => {
   const id = Number(req.params.id)
   tickets = tickets.filter((el) => el.id !== id)

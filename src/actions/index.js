@@ -7,7 +7,10 @@ import {
   REMOVE_TASK_END_FAIL,
   CHANGE_TASK_STATUS_START,
   CHANGE_TASK_STATUS_END_SUCCESS,
-  CHANGE_TASK_STATUS_END_FAIL
+  CHANGE_TASK_STATUS_END_FAIL,
+  FETCH_STATUSES_START,
+  FETCH_STATUSES_END_SUCCESS,
+  FETCH_STATUSES_END_FAIL
 } from '../constants'
 import {handleErrors} from '../utils'
 
@@ -89,5 +92,27 @@ export function changeStatus(id, status) {
           id, status
         })
       })
+  }
+}
+
+export function fetchStatuses() {
+  return (dispatch) => {
+
+    dispatch({
+      type: FETCH_STATUSES_START
+    })
+
+    fetch('api/statuses/')
+      .then(handleErrors)
+      .then((response) => response.json())
+      .then((statuses) => dispatch({
+          type: FETCH_STATUSES_END_SUCCESS,
+          statuses
+        })
+      )
+      .catch((error) => dispatch({
+        type: FETCH_STATUSES_END_FAIL,
+        error
+      }))
   }
 }

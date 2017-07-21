@@ -11,23 +11,24 @@ import Loader from '../Loader'
 @connect(state => ({
   tasks: state.dashboardReducers.tasks,
   error: state.dashboardReducers.error,
-  pending: state.dashboardReducers.pending,
-  columns: state.columns
+  pendingTasks: state.dashboardReducers.pendingTasks,
+  pendingStatuses: state.dashboardReducers.pendingStatuses,
+  statuses: state.dashboardReducers.statuses
 }), actions)
 
 class Dashboard extends Component {
 
   getColumns = () => {
-    const {tasks, columns} = this.props
+    const {tasks, statuses} = this.props
 
     const isEmptyCol = (status) => !tasks.find((task) => task.status === status)
 
     return (
       <div className="row">
-        {columns.map((col, i) => (
-          <Column key={i} title={col.name} status={col.status} isEmpty={isEmptyCol(col.status)}>
+        {statuses.map((status, i) => (
+          <Column key={i} title={status.name} status={status.id} isEmpty={isEmptyCol(status.id)}>
             {
-              tasks.filter((task) => task.status === col.status).map((el, i) =>
+              tasks.filter((task) => task.status === status.id).map((el, i) =>
                 (<Card key={i} data={el} handleClick={this.handleClick}/>)
               )
             }
@@ -41,15 +42,16 @@ class Dashboard extends Component {
   }
 
   componentDidMount() {
+    this.props.fetchStatuses()
     this.props.fetchTasks()
   }
 
   render() {
-    const {tasks, pending, error} = this.props
-
+    const {pendingTasks, pendingStatuses, error} = this.props
+    
     return (
       <div>
-        {pending && <Loader />}
+        {(pendingTasks || pendingStatuses) && <Loader />}
         {this.getColumns()}
         {error && <span>{error.message}</span>}
       </div>
