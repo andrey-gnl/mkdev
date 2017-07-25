@@ -15,12 +15,14 @@ app.get('/api/tickets', (req, res) => {
 })
 
 app.get('/api/statuses', (req, res) => {
-  setTimeout(() => res.send(statuses), 750)
+  const visibleStatuses = statuses.filter(s => s.order >= 0)
+  setTimeout(() => res.send(visibleStatuses), 750)
 })
 
 app.delete('/api/tickets/:id', (req, res) => {
   const id = Number(req.params.id)
   tickets = tickets.filter((el) => el.id !== id)
+
   setTimeout(() => res.send({status: 'ok'}), 500)
 });
 

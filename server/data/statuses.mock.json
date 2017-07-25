@@ -14,7 +14,13 @@
   {
     "id": 4,
     "name": "Archive",
-    "order": 0,
+    "order": -1,
+    "active": false
+  },
+  {
+    "id": 5,
+    "name": "Deleted",
+    "order": -1,
     "active": false
   },
   {

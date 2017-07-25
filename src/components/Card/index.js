@@ -31,7 +31,7 @@ export default class Card extends Component {
     const taskIsPendingStatus = data.pendingStatus
     taskIsPendingRemove && (cardClass += ' disabled')
     taskIsPendingStatus && (cardClass += ' waiting')
-    console.log('data.pendingStatus', data.pendingStatus);
+
     return connectDragSource(
       <div className={`${cardClass} ${isDragging ? 'waiting' : ''}`}>
         <button

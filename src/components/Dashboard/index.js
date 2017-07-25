@@ -20,6 +20,9 @@ class Dashboard extends Component {
 
   getColumns = () => {
     const {tasks, statuses} = this.props
+    console.log('*****');
+    console.log(tasks);
+    console.log('*****');
 
     const isEmptyCol = (status) => !tasks.find((task) => task.status === status)
 
