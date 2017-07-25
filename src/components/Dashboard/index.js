@@ -19,17 +19,20 @@ import Loader from '../Loader'
 class Dashboard extends Component {
 
   getColumns = () => {
-    const {tasks, statuses} = this.props
-    console.log('*****');
-    console.log(tasks);
-    console.log('*****');
+    const {tasks, statuses, changeStatus} = this.props
 
     const isEmptyCol = (status) => !tasks.find((task) => task.status === status)
 
     return (
       <div className="row">
         {statuses.map((status, i) => (
-          <Column key={i} title={status.name} status={status.id} isEmpty={isEmptyCol(status.id)}>
+          <Column
+            key={i}
+            title={status.name}
+            status={status.id}
+            isEmpty={isEmptyCol(status.id)}
+            onDrop={changeStatus}
+          >
             {
               tasks.filter((task) => task.status === status.id).map((el, i) =>
                 (<Card key={i} data={el} handleClick={this.handleClick}/>)

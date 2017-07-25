@@ -7,11 +7,15 @@ let tickets = require('./data/tickets.mock.json')
 let statuses = require('./data/statuses.mock.json')
 
 const port = process.env.PORT || 3009
+const DELETE_STATUS = 5
 
-app.use(bodyParser.json());
+
+app.use(bodyParser.json())
 
 app.get('/api/tickets', (req, res) => {
-  setTimeout(() => res.send(tickets), 750)
+  const onlyActiveTickets = tickets.filter((el) => Number(el.status) !== Number(DELETE_STATUS))
+
+  setTimeout(() => res.send(onlyActiveTickets), 750)
 })
 
 app.get('/api/statuses', (req, res) => {
@@ -21,19 +25,22 @@ app.get('/api/statuses', (req, res) => {
 
 app.delete('/api/tickets/:id', (req, res) => {
   const id = Number(req.params.id)
-  tickets = tickets.filter((el) => el.id !== id)
+  const deletedTicket = tickets.find((el) => el.id === Number(id))
+  deletedTicket.status = DELETE_STATUS
+  deletedTicket.updatedAt = new Date().toISOString()
 
   setTimeout(() => res.send({status: 'ok'}), 500)
-});
+})
 
 app.put('/api/tickets/:id', (req, res) => {
   const id = Number(req.params.id)
   const status = Number(req.body.status)
   const statusIsValid = !!statuses.find(s => s.id === status)
 
-  if(statusIsValid) {
+  if (statusIsValid) {
     const task = tickets.find(el => el.id === id)
     task.status = status
+    task.updatedAt = new Date().toISOString()
 
     setTimeout(() => res.send({status: 'ok'}), 750)
   } else {
@@ -42,14 +49,14 @@ app.put('/api/tickets/:id', (req, res) => {
 
 })
 
-if(process.env.NODE_ENV === 'production') {
+if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, 'public')))
   app.use('/', express.static(path.join(__dirname + '/public')))
 }
 
-const server = app.listen(port, function(){
-  console.log("Express server listening on port %d in %s mode", this.address().port, app.settings.env);
-});
-server.on('listening',function(){
-  console.log('ok, server is running');
-});
+const server = app.listen(port, function () {
+  console.log("Express server listening on port %d in %s mode", this.address().port, app.settings.env)
+})
+server.on('listening', function () {
+  console.log('ok, server is running')
+})

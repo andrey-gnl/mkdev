@@ -58,7 +58,10 @@ export default (state = initialState, action) => {
     case CHANGE_TASK_STATUS_END_SUCCESS:
       return {
         ...state,
-        tasks: state.tasks.map(t => t.id !== id ? t : {...t, status, pendingStatus: false})
+        tasks: state.tasks.map(t =>
+          t.id !== id
+            ? t
+            : {...t, status, pendingStatus: false, updatedAt: new Date().toISOString()})
       }
     case CHANGE_TASK_STATUS_END_FAIL:
       console.error(`CAN'T CHANGE STATUS :(`);
