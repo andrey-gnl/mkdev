@@ -11,7 +11,7 @@ export default class App extends Component {
         <Switch>
           <Route exact path="/" render={() => (<h1>Home page</h1>)}/>
           <Route exact path="/dashboard" component={Dashboard}/>
-          <Route path="/archive" component={Archive}/>
+          <Route path="/dashboard/archive" component={Archive}/>
         </Switch>
       </Router>
     )

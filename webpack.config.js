@@ -80,6 +80,7 @@ module.exports = {
   ],
   output: {
     path: __dirname + '/server/public',
+    publicPath: '/',
     filename: 'bundle.js'
   },
   devtool: env !== 'production' ? 'source-map' : false,
@@ -90,6 +91,7 @@ module.exports = {
   },
   devServer: {
     historyApiFallback: true,
+    publicPath: '/',
     contentBase: './',
     port: 5005,
     proxy: {
