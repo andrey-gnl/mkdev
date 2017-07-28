@@ -10,7 +10,10 @@ import {
   CHANGE_TASK_STATUS_END_FAIL,
   FETCH_STATUSES_START,
   FETCH_STATUSES_END_SUCCESS,
-  FETCH_STATUSES_END_FAIL
+  FETCH_STATUSES_END_FAIL,
+  FETCH_ARCHIVE_TICKETS_START,
+  FETCH_ARCHIVE_TICKETS_END_SUCCESS,
+  FETCH_ARCHIVE_TICKETS_END_FAIL
 } from '../constants'
 import {handleErrors} from '../utils'
 
@@ -31,6 +34,29 @@ export function fetchTasks() {
       )
       .catch((error) => dispatch({
         type: FETCH_TICKETS_END_FAIL,
+        error
+      }))
+
+  }
+}
+
+export function fetchTasksByStatus(status) {
+
+  return (dispatch) => {
+    dispatch({
+      type: FETCH_ARCHIVE_TICKETS_START
+    })
+
+    fetch(`/api/tickets/archive/`)
+      .then(handleErrors)
+      .then((response) => response.json())
+      .then((tasks) => dispatch({
+          type: FETCH_ARCHIVE_TICKETS_END_SUCCESS,
+          tasks
+        })
+      )
+      .catch((error) => dispatch({
+        type: FETCH_ARCHIVE_TICKETS_END_FAIL,
         error
       }))
 

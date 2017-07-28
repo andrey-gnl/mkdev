@@ -1,3 +1,7 @@
+.card-wrap, .card
+    &:not(:last-child)
+        margin-bottom: 10px
+
 .card
     $this: &
 
@@ -20,8 +24,6 @@
     &.waiting
         cursor: progress
         opacity: .5
-    &:not(:last-child)
-        margin-bottom: 10px
     &__title
         font-size: 18px
     &__button

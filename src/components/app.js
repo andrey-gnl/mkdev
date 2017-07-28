@@ -1,8 +1,7 @@
 import React, {Component} from 'react'
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
 import Dashboard from './Dashboard'
-
-const Archive = () => (<h2>This is Archive Page</h2>)
+import Archive from './Archive'
 
 export default class App extends Component {
   render() {

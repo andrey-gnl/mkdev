@@ -9,7 +9,6 @@ let statuses = require('./data/statuses.mock.json')
 const port = process.env.PORT || 3009
 const DELETE_STATUS = 5
 
-
 app.use(bodyParser.json())
 
 app.get('/api/tickets', (req, res) => {
@@ -17,6 +16,13 @@ app.get('/api/tickets', (req, res) => {
 
   setTimeout(() => res.send(onlyActiveTickets), 750)
 })
+
+app.get('/api/tickets/archive', (req, res) => {
+  const filteredByStatus = tickets.filter((el) => Number(el.status) === 5)
+
+  setTimeout(() => res.send(!!(filteredByStatus.length) ? filteredByStatus : []), 750)
+})
+
 
 app.get('/api/statuses', (req, res) => {
   const visibleStatuses = statuses.filter(s => s.order >= 0)

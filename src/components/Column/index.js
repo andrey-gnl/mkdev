@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import { DropTarget } from 'react-dnd'
 import {TYPES} from '../../constants'
+import ColumnClean from './columClean'
 
 const columnTarget = {
   drop(props, monitor) {
@@ -25,16 +26,10 @@ function collect(connect, monitor) {
 export default class Column extends Component {
 
   render() {
-    const {title, isEmpty, connectDropTarget, isOver, children} = this.props
+    const {connectDropTarget, ...rest} = this.props
     return connectDropTarget(
-      <div className={`column ${isOver ? 'is-over' : ''}`}>
-        <div className="column__inner">
-          <h2 className="column__title">{title}</h2>
-          <div className="column__body">
-            {children}
-            {isEmpty && <div className="column__empty">Is empty...</div>}
-          </div>
-        </div>
+      <div className="column-wrap">
+        <ColumnClean {...rest} />
       </div>
     )
   }

@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import { DragSource } from 'react-dnd'
 import {formatDate} from '../../utils'
 import {TYPES} from '../../constants'
+import Card from './cardClean'
 
 const cardSource = {
   beginDrag(props) {
@@ -23,34 +24,13 @@ function collect(connect, monitor) {
 
 @DragSource(TYPES.CARD, cardSource, collect)
 
-export default class Card extends Component {
+export default class CardDnd extends Component {
   render() {
-    const {data, handleClick, isDragging, connectDragSource } = this.props
-    let cardClass = 'card'
-    const taskIsPendingRemove = data.pendingRemove
-    const taskIsPendingStatus = data.pendingStatus
-    taskIsPendingRemove && (cardClass += ' disabled')
-    taskIsPendingStatus && (cardClass += ' waiting')
+    const {connectDragSource, ...rest } = this.props
 
     return connectDragSource(
-      <div className={`${cardClass} ${isDragging ? 'waiting' : ''}`}>
-        <button
-          type="button"
-          className="card__button"
-          onClick={() => handleClick(data.id)}
-          disabled={taskIsPendingRemove || taskIsPendingStatus || isDragging}
-        >
-          <i className="fa fa-times" />
-        </button>
-
-        <div className="card__title">{data.title}</div>
-        <div className="card__description">{data.description}</div>
-
-        <div className="card__time meta">
-          Created: {formatDate(data.createdAt)}
-          <br />
-          Edited: {formatDate(data.updatedAt)}
-        </div>
+      <div className="card-wrap">
+        <Card {...rest}/>
       </div>
     )
   }

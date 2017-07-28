@@ -5,11 +5,11 @@
     display: flex
     flex-wrap: nowrap
     padding-top: 10px
-
+    > div
+        flex: 1 0 270px
+        padding: 0 5px
 .column
     $this: &
-    flex: 1 0 270px
-    padding: 0 5px
     &.is-over
         #{$this}__inner
             &:after
