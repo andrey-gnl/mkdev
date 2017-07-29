@@ -1,4 +1,4 @@
-import {combineReducers} from 'redux'
+import { combineReducers } from 'redux'
 import dashboardReducers from './dashboard'
 import archiveReducers from './archive'
 

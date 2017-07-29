@@ -1,16 +1,15 @@
-import React, {Component} from 'react'
+import React, { Component } from 'react'
 import { DropTarget } from 'react-dnd'
-import {TYPES} from '../../constants'
+import { TYPES } from '../../constants'
 import ColumnClean from './columClean'
 
 const columnTarget = {
   drop(props, monitor) {
-    const item = monitor.getItem();
+    const item = monitor.getItem()
 
-    if(Number(item.status) !== Number(props.status)) {
+    if (Number(item.status) !== Number(props.status)) {
       props.onDrop(item.id, props.status)
     }
-
   }
 }
 
@@ -24,9 +23,8 @@ function collect(connect, monitor) {
 @DropTarget(TYPES.CARD, columnTarget, collect)
 
 export default class Column extends Component {
-
   render() {
-    const {connectDropTarget, ...rest} = this.props
+    const { connectDropTarget, ...rest } = this.props
     return connectDropTarget(
       <div className="column-wrap">
         <ColumnClean {...rest} />

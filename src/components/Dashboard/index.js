@@ -1,5 +1,5 @@
-import React, {Component} from 'react'
-import {connect} from 'react-redux'
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import { DragDropContext } from 'react-dnd'
 import HTML5Backend from 'react-dnd-html5-backend'
 import * as actions from '../../actions'
@@ -17,9 +17,17 @@ import Loader from '../Loader'
 }), actions)
 
 class Dashboard extends Component {
+  componentDidMount() {
+    this.props.fetchStatuses()
+    this.props.fetchTasks()
+  }
+
+  handleClick = (id) => {
+    this.props.removeTask(id)
+  }
 
   getColumns = () => {
-    const {tasks, statuses, changeStatus} = this.props
+    const { tasks, statuses, changeStatus } = this.props
 
     const isEmptyCol = (status) => !tasks.find((task) => task.status === status)
 
@@ -34,8 +42,8 @@ class Dashboard extends Component {
             onDrop={changeStatus}
           >
             {
-              tasks.filter((task) => task.status === status.id).map((el, i) =>
-                (<Card key={i} data={el} handleClick={this.handleClick}/>)
+              tasks.filter((task) => task.status === status.id).map((el, j) =>
+                (<Card key={j} data={el} handleClick={this.handleClick} />)
               )
             }
           </Column>
@@ -43,18 +51,9 @@ class Dashboard extends Component {
       </div>)
   }
 
-  handleClick = (id) => {
-    this.props.removeTask(id)
-  }
-
-  componentDidMount() {
-    this.props.fetchStatuses()
-    this.props.fetchTasks()
-  }
-
   render() {
-    const {pendingTasks, pendingStatuses, error} = this.props
-    
+    const { pendingTasks, pendingStatuses, error } = this.props
+
     return (
       <div>
         {(pendingTasks || pendingStatuses) && <Loader />}

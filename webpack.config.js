@@ -14,6 +14,11 @@ const _module = {
     test: /\.(?:ico|gif|png|jpg|jpeg|webp)$/,
     use: 'url-loader'
   }, {
+    enforce: 'pre',
+    test: /\.js$/,
+    exclude: /node_modules/,
+    loader: 'eslint-loader'
+  }, {
     test: /\.jsx?$/,
     exclude: /node_modules/,
     use: {
@@ -58,7 +63,14 @@ let _plugins = [
     'process.env': {
       'NODE_ENV': JSON.stringify(env)
     }
-  })
+  }),
+  new webpack.LoaderOptionsPlugin({
+    options: {
+      eslint: {
+        formatter: require('eslint-formatter-pretty')
+      }
+    }
+  }),
 ];
 
 if (env === 'production') {

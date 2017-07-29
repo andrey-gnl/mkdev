@@ -15,10 +15,9 @@ import {
   FETCH_ARCHIVE_TICKETS_END_SUCCESS,
   FETCH_ARCHIVE_TICKETS_END_FAIL
 } from '../constants'
-import {handleErrors} from '../utils'
+import { handleErrors } from '../utils'
 
 export function fetchTasks() {
-
   return (dispatch) => {
     dispatch({
       type: FETCH_TICKETS_START
@@ -28,63 +27,59 @@ export function fetchTasks() {
       .then(handleErrors)
       .then((response) => response.json())
       .then((tasks) => dispatch({
-          type: FETCH_TICKETS_END_SUCCESS,
-          tasks
-        })
+        type: FETCH_TICKETS_END_SUCCESS,
+        tasks
+      })
       )
       .catch((error) => dispatch({
         type: FETCH_TICKETS_END_FAIL,
         error
       }))
-
   }
 }
 
-export function fetchTasksByStatus(status) {
-
+export function fetchTasksByStatus() {
   return (dispatch) => {
     dispatch({
       type: FETCH_ARCHIVE_TICKETS_START
     })
 
-    fetch(`/api/tickets/archive/`)
+    fetch('/api/tickets/archive/')
       .then(handleErrors)
       .then((response) => response.json())
       .then((tasks) => dispatch({
-          type: FETCH_ARCHIVE_TICKETS_END_SUCCESS,
-          tasks
-        })
+        type: FETCH_ARCHIVE_TICKETS_END_SUCCESS,
+        tasks
+      })
       )
       .catch((error) => dispatch({
         type: FETCH_ARCHIVE_TICKETS_END_FAIL,
         error
       }))
-
   }
 }
 
 export function removeTask(id) {
   return (dispatch) => {
-
     dispatch({
       type: REMOVE_TASK_START,
       id
     })
 
-    fetch(`api/tickets/${id}`, {method: 'DELETE'})
+    fetch(`api/tickets/${id}`, { method: 'DELETE' })
       .then((response) => response.json())
       .then((response) => {
-          if (response.status === 'ok') {
-            return dispatch({
-              type: REMOVE_TASK_END_SUCCESS,
-              id
-            })
-          }
+        if (response.status === 'ok') {
           return dispatch({
-            type: REMOVE_TASK_END_FAIL,
+            type: REMOVE_TASK_END_SUCCESS,
             id
           })
         }
+        return dispatch({
+          type: REMOVE_TASK_END_FAIL,
+          id
+        })
+      }
       )
   }
 }
@@ -93,7 +88,8 @@ export function changeStatus(id, status) {
   return (dispatch) => {
     dispatch({
       type: CHANGE_TASK_STATUS_START,
-      id, status
+      id,
+      status
     })
 
     fetch(`api/tickets/${id}`,
@@ -102,20 +98,22 @@ export function changeStatus(id, status) {
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({status})
+        body: JSON.stringify({ status })
       })
       .then((response) => response.json())
       .then((response) => {
-        if(response.status === 'ok') {
+        if (response.status === 'ok') {
           return dispatch({
             type: CHANGE_TASK_STATUS_END_SUCCESS,
-            id, status
+            id,
+            status
           })
         }
 
         return dispatch({
           type: CHANGE_TASK_STATUS_END_FAIL,
-          id, status
+          id,
+          status
         })
       })
   }
@@ -123,7 +121,6 @@ export function changeStatus(id, status) {
 
 export function fetchStatuses() {
   return (dispatch) => {
-
     dispatch({
       type: FETCH_STATUSES_START
     })
@@ -132,9 +129,9 @@ export function fetchStatuses() {
       .then(handleErrors)
       .then((response) => response.json())
       .then((statuses) => dispatch({
-          type: FETCH_STATUSES_END_SUCCESS,
-          statuses
-        })
+        type: FETCH_STATUSES_END_SUCCESS,
+        statuses
+      })
       )
       .catch((error) => dispatch({
         type: FETCH_STATUSES_END_FAIL,

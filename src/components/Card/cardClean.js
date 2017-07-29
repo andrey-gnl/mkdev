@@ -1,8 +1,8 @@
 import React from 'react'
-import {formatDate} from '../../utils'
+import { formatDate } from '../../utils'
 
 const Card = (props) => {
-  const {data, handleClick, isDragging } = props
+  const { data, handleClick, isDragging } = props
   let cardClass = 'card'
   const taskIsPendingRemove = data.pendingRemove
   const taskIsPendingStatus = data.pendingStatus

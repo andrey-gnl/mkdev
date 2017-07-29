@@ -22,22 +22,22 @@ const initialState = {
 }
 
 export default (state = initialState, action) => {
-  const {type, tasks, error, id, statuses, status} = action
+  const { type, tasks, error, id, statuses, status } = action
 
   switch (type) {
     // all tasks
     case FETCH_TICKETS_START:
-      return {...state, pendingTasks: true}
+      return { ...state, pendingTasks: true }
     case FETCH_TICKETS_END_SUCCESS:
-      return {...state, tasks, pendingTasks: false, error: ''}
+      return { ...state, tasks, pendingTasks: false, error: '' }
     case FETCH_TICKETS_END_FAIL:
-      return {...state, tasks: [], pendingTasks: false, error}
+      return { ...state, tasks: [], pendingTasks: false, error }
 
     // single task
     case REMOVE_TASK_START:
       return {
         ...state,
-        tasks: state.tasks.map(t => t.id !== id ? t : {...t, pendingRemove: true})
+        tasks: state.tasks.map(t => (t.id !== id ? t : { ...t, pendingRemove: true }))
       }
     case REMOVE_TASK_END_SUCCESS:
       return {
@@ -45,29 +45,35 @@ export default (state = initialState, action) => {
         tasks: state.tasks.filter(t => t.id !== id)
       }
     case REMOVE_TASK_END_FAIL:
-      console.error(`CAN'T DELETE CARD :(`)
+      console.error('CAN\'T DELETE CARD :(')
       return {
         ...state,
-        tasks: state.tasks.map(t => t.id !== id ? t : {...t, pendingRemove: false})
+        tasks: state.tasks.map(t => (t.id !== id
+          ? t
+          : { ...t, pendingRemove: false }))
       }
     case CHANGE_TASK_STATUS_START:
       return {
         ...state,
-        tasks: state.tasks.map(t => t.id !== id ? t : {...t, status, oldStatus: t.status, pendingStatus: true})
+        tasks: state.tasks.map(t => (t.id !== id
+          ? t
+          : { ...t, status, oldStatus: t.status, pendingStatus: true }))
       }
     case CHANGE_TASK_STATUS_END_SUCCESS:
       return {
         ...state,
         tasks: state.tasks.map(t =>
-          t.id !== id
+          (t.id !== id
             ? t
-            : {...t, status, pendingStatus: false, updatedAt: new Date().toISOString()})
+            : { ...t, status, pendingStatus: false, updatedAt: new Date().toISOString() }))
       }
     case CHANGE_TASK_STATUS_END_FAIL:
-      console.error(`CAN'T CHANGE STATUS :(`);
+      console.error('CAN\'T CHANGE STATUS :(')
       return {
         ...state,
-        tasks: state.tasks.map(t => t.id !== id ? t : {...t, status: t.oldStatus,pendingStatus: false})
+        tasks: state.tasks.map(t => (t.id !== id
+          ? t
+          : { ...t, status: t.oldStatus, pendingStatus: false }))
       }
 
     // all statuses
@@ -84,7 +90,7 @@ export default (state = initialState, action) => {
         statuses: statuses.filter(s => s.active).sort((curr, next) => curr.order - next.order)
       }
     case FETCH_STATUSES_END_FAIL:
-      console.error(`CAN'T FETCH STATUSES :(`);
+      console.error('CAN\'T FETCH STATUSES :(')
       return {
         ...state,
         pendingStatuses: false,
@@ -93,4 +99,4 @@ export default (state = initialState, action) => {
   }
 
   return state
-};
+}

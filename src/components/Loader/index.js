@@ -1,9 +1,8 @@
 import React from 'react'
+import loaderImg from '../../../static/assets/loader.gif'
 
-const Loader = () => {
-  return (
-    <div className="loader"><img src={require('../../../static/assets/loader.gif')}/></div>
-  )
-}
+const Loader = () => (
+  <div className="loader"><img src={loaderImg} /></div>
+)
 
 export default Loader
