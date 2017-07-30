@@ -4,6 +4,7 @@ import * as actions from '../../actions'
 import Column from '../Column/columClean'
 import Card from '../Card/cardClean'
 import Loader from '../Loader'
+import { ARCHIVE } from '../../constants'
 
 @connect(state => ({
   tasks: state.archiveReducers.tasks,
@@ -17,7 +18,7 @@ class Archive extends Component {
   }
 
    handleClick = (id) => {
-     this.props.removeTask(id)
+     this.props.removeTask(id, ARCHIVE)
    }
 
   getTickets = () => {

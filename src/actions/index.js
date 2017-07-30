@@ -2,9 +2,6 @@ import {
   FETCH_TICKETS_START,
   FETCH_TICKETS_END_SUCCESS,
   FETCH_TICKETS_END_FAIL,
-  REMOVE_TASK_START,
-  REMOVE_TASK_END_SUCCESS,
-  REMOVE_TASK_END_FAIL,
   CHANGE_TASK_STATUS_START,
   CHANGE_TASK_STATUS_END_SUCCESS,
   CHANGE_TASK_STATUS_END_FAIL,
@@ -13,7 +10,9 @@ import {
   FETCH_STATUSES_END_FAIL,
   FETCH_ARCHIVE_TICKETS_START,
   FETCH_ARCHIVE_TICKETS_END_SUCCESS,
-  FETCH_ARCHIVE_TICKETS_END_FAIL
+  FETCH_ARCHIVE_TICKETS_END_FAIL,
+  SECTIONS,
+  DASHBOARD
 } from '../constants'
 import { handleErrors } from '../utils'
 
@@ -59,24 +58,24 @@ export function fetchTasksByStatus() {
   }
 }
 
-export function removeTask(id) {
+export function removeTask(id, type = DASHBOARD) {
   return (dispatch) => {
     dispatch({
-      type: REMOVE_TASK_START,
+      type: SECTIONS[type].start,
       id
     })
 
-    fetch(`api/tickets/${id}`, { method: 'DELETE' })
+    fetch(`/api/tickets/${id}`, { method: 'DELETE' })
       .then((response) => response.json())
       .then((response) => {
         if (response.status === 'ok') {
           return dispatch({
-            type: REMOVE_TASK_END_SUCCESS,
+            type: SECTIONS[type].endSuccess,
             id
           })
         }
         return dispatch({
-          type: REMOVE_TASK_END_FAIL,
+          type: SECTIONS[type].endFail,
           id
         })
       }
