@@ -22,7 +22,7 @@ export function fetchTasks() {
       type: FETCH_TICKETS_START
     })
 
-    fetch('api/tickets/')
+    fetch('/api/tickets')
       .then(handleErrors)
       .then((response) => response.json())
       .then((tasks) => dispatch({
@@ -43,7 +43,7 @@ export function fetchTasksByStatus() {
       type: FETCH_ARCHIVE_TICKETS_START
     })
 
-    fetch('/api/tickets/archive/')
+    fetch('/api/tickets/archive')
       .then(handleErrors)
       .then((response) => response.json())
       .then((tasks) => dispatch({
@@ -65,7 +65,7 @@ export function removeTask(id, type = DASHBOARD) {
       id
     })
 
-    fetch(`/api/tickets/${id}`, { method: 'DELETE' })
+    fetch(`api/tickets/${id}`, { method: 'DELETE' })
       .then((response) => response.json())
       .then((response) => {
         if (response.status === 'ok') {
@@ -124,7 +124,7 @@ export function fetchStatuses() {
       type: FETCH_STATUSES_START
     })
 
-    fetch('api/statuses/')
+    fetch('/api/statuses')
       .then(handleErrors)
       .then((response) => response.json())
       .then((statuses) => dispatch({

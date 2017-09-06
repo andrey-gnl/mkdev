@@ -1,10 +1,11 @@
 const express = require('express')
+
 const app = express()
 const bodyParser = require('body-parser')
 const path = require('path')
 
-let tickets = require('./data/tickets.mock.json')
-let statuses = require('./data/statuses.mock.json')
+const tickets = require('./data/tickets.mock.json')
+const statuses = require('./data/statuses.mock.json')
 
 const port = process.env.PORT || 3009
 const DELETE_STATUS = 5
@@ -20,7 +21,7 @@ app.get('/api/tickets', (req, res) => {
 app.get('/api/tickets/archive', (req, res) => {
   const filteredByStatus = tickets.filter((el) => Number(el.status) === 5)
 
-  setTimeout(() => res.send(!!(filteredByStatus.length) ? filteredByStatus : []), 750)
+  setTimeout(() => res.send(filteredByStatus.length ? filteredByStatus : []), 750)
 })
 
 
@@ -35,7 +36,7 @@ app.delete('/api/tickets/:id', (req, res) => {
   deletedTicket.status = DELETE_STATUS
   deletedTicket.updatedAt = new Date().toISOString()
 
-  setTimeout(() => res.send({status: 'ok'}), 500)
+  setTimeout(() => res.send({ status: 'ok' }), 500)
 })
 
 app.put('/api/tickets/:id', (req, res) => {
@@ -48,21 +49,24 @@ app.put('/api/tickets/:id', (req, res) => {
     task.status = status
     task.updatedAt = new Date().toISOString()
 
-    setTimeout(() => res.send({status: 'ok'}), 750)
+    setTimeout(() => res.send({ status: 'ok' }), 750)
   } else {
-    setTimeout(() => res.send({status: 'error'}), 750)
+    setTimeout(() => res.send({ status: 'error' }), 750)
   }
-
 })
 
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, 'public')))
-  app.use('/', express.static(path.join(__dirname + '/public')))
+  app.use('/', express.static(path.join(`${__dirname}/public`)))
+  // Always return the main index.html, so react-router render the route in the client
+  app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, './public/index.html'))
+  })
 }
 
 const server = app.listen(port, function () {
-  console.log("Express server listening on port %d in %s mode", this.address().port, app.settings.env)
+  console.log('Express server listening on port %d in %s mode', this.address().port, app.settings.env)
 })
-server.on('listening', function () {
+server.on('listening', () => {
   console.log('ok, server is running')
 })

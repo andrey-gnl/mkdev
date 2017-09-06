@@ -19094,7 +19094,7 @@ function fetchTasks() {
       type: _constants.FETCH_TICKETS_START
     });
 
-    fetch('api/tickets/').then(_utils.handleErrors).then(function (response) {
+    fetch('/api/tickets').then(_utils.handleErrors).then(function (response) {
       return response.json();
     }).then(function (tasks) {
       return dispatch({
@@ -19116,7 +19116,7 @@ function fetchTasksByStatus() {
       type: _constants.FETCH_ARCHIVE_TICKETS_START
     });
 
-    fetch('/api/tickets/archive/').then(_utils.handleErrors).then(function (response) {
+    fetch('/api/tickets/archive').then(_utils.handleErrors).then(function (response) {
       return response.json();
     }).then(function (tasks) {
       return dispatch({
@@ -19141,7 +19141,7 @@ function removeTask(id) {
       id: id
     });
 
-    fetch('/api/tickets/' + id, { method: 'DELETE' }).then(function (response) {
+    fetch('api/tickets/' + id, { method: 'DELETE' }).then(function (response) {
       return response.json();
     }).then(function (response) {
       if (response.status === 'ok') {
@@ -19198,7 +19198,7 @@ function fetchStatuses() {
       type: _constants.FETCH_STATUSES_START
     });
 
-    fetch('api/statuses/').then(_utils.handleErrors).then(function (response) {
+    fetch('/api/statuses').then(_utils.handleErrors).then(function (response) {
       return response.json();
     }).then(function (statuses) {
       return dispatch({
